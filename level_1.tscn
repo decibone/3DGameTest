@@ -48,4 +48,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14.9605)
 shape = SubResource("BoxShape3D_0dl41")
 
 [node name="Player" parent="." instance=ExtResource("1_fmtga")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.35113, 1.17759, 11.722)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39615, 1.17759, 14.3009)

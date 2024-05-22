@@ -3,6 +3,9 @@ extends CharacterBody3D
 const SPEED = 5.0
 const SPRINT_MULTIPLIER = 2.0
 const JUMP_VELOCITY = 4.5
+const NORMAL_FOV = 70.0
+const SPRINT_FOV = 60.0
+const ZOOM_SPEED = 10.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -35,7 +38,8 @@ func _physics_process(delta):
 	var direction = (neck.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 	# Determine if the player is sprinting.
-	var is_sprinting = Input.is_action_pressed("sprint")
+	var is_moving = input_dir != Vector2.ZERO
+	var is_sprinting = Input.is_action_pressed("sprint") and is_moving
 
 	var current_speed = SPEED * (SPRINT_MULTIPLIER if is_sprinting else 1.0)
 
@@ -47,6 +51,12 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+	# Handle camera zoom when sprinting
+	if is_sprinting:
+		camera.fov = lerp(camera.fov, SPRINT_FOV, ZOOM_SPEED * delta)
+	else:
+		camera.fov = lerp(camera.fov, NORMAL_FOV, ZOOM_SPEED * delta)
 
 # Add this in your project settings to define the sprint action.
 # In Project -> Project Settings -> Input Map, add an action called "sprint" and bind it to the left shift key.
