@@ -1,0 +1,76 @@
+[gd_scene load_steps=8 format=3 uid="uid://dp0bsgqn7c280"]
+
+[ext_resource type="Material" uid="uid://blswuokykbelt" path="res://Assets/grid_texture.tres" id="1_hu033"]
+[ext_resource type="Material" uid="uid://dm6w7pt35llei" path="res://Assets/green_grid.tres" id="2_4it46"]
+[ext_resource type="PackedScene" uid="uid://dixqvhp8ehcby" path="res://Scenes/player.tscn" id="2_tnvkx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1fqw1"]
+sky_top_color = Color(0.449674, 0.299155, 0.922754, 1)
+sky_horizon_color = Color(0.638924, 0.679798, 0.874509, 1)
+ground_bottom_color = Color(0.106022, 0.420036, 0.575281, 1)
+ground_horizon_color = Color(0.638924, 0.679798, 0.874509, 1)
+
+[sub_resource type="Sky" id="Sky_u23fa"]
+sky_material = SubResource("ProceduralSkyMaterial_1fqw1")
+
+[sub_resource type="Environment" id="Environment_4kuxp"]
+background_mode = 2
+sky = SubResource("Sky_u23fa")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ub1ss"]
+albedo_color = Color(0.715345, 0.720388, 0.146952, 1)
+metallic = 0.11
+
+[node name="CSGtest" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4kuxp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.5, -2.18557e-08, 0, -4.37114e-08, 1, -0.5, 0.866025, 3.78552e-08, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.39204, -1.59668, 9.32527)
+size = Vector3(22.7849, 3, 22.5408)
+material = ExtResource("1_hu033")
+
+[node name="Crevice" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.86363, 1.18995, 14.536)
+operation = 2
+size = Vector3(10.7408, 4, 9.90094)
+material = ExtResource("1_hu033")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.883778, -0.751827, 8.77318)
+radius = 1.51604
+material = SubResource("StandardMaterial3D_ub1ss")
+
+[node name="Platform2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.3177, 1.40388, 13.3618)
+size = Vector3(3.52979, 0.231689, 2.70117)
+material = ExtResource("2_4it46")
+
+[node name="Platform3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0616, 2.30958, 12.6024)
+size = Vector3(3.7041, 0.231689, 4.28174)
+material = ExtResource("2_4it46")
+
+[node name="Platform" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8851, 0.547513, 17.184)
+size = Vector3(2.45996, 0.231689, 2.70117)
+material = ExtResource("2_4it46")
+
+[node name="Hole" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4547, -1.90479, 1.79352)
+operation = 2
+size = Vector3(4.62292, 4.80957, 4.58704)
+material = ExtResource("1_hu033")
+
+[node name="Player" parent="." instance=ExtResource("2_tnvkx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.04236, 1.26, 8.72455)

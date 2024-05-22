@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://c2pnyqkf7x1pf"]
 
-[ext_resource type="PackedScene" uid="uid://dixqvhp8ehcby" path="res://player.tscn" id="1_fmtga"]
+[ext_resource type="PackedScene" uid="uid://dixqvhp8ehcby" path="res://Scenes/player.tscn" id="1_fsf2h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8l8y6"]
 sky_top_color = Color(0.449674, 0.299155, 0.922754, 1)
@@ -47,5 +47,5 @@ mesh = SubResource("BoxMesh_x16uu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14.9605)
 shape = SubResource("BoxShape3D_0dl41")
 
-[node name="Player" parent="." instance=ExtResource("1_fmtga")]
+[node name="Player" parent="." instance=ExtResource("1_fsf2h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39615, 1.17759, 14.3009)
