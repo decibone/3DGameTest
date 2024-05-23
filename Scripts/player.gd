@@ -2,31 +2,37 @@ extends CharacterBody3D
 
 const SPEED = 3.0
 const SPRINT_MULTIPLIER = 1.5
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 7.0
 const NORMAL_FOV = 70.0
 const SPRINT_FOV = 85.0
 const ZOOM_SPEED = 10.0
 
 # Bob variables
-const BOB_FREQ = 2.5
-const BOB_AMP = 0.06
+const BOB_FREQ = 3.0
+const BOB_AMP = 0.08
 var t_bob =0.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity = 20
 @onready var neck := $Neck
 @onready var camera := $Neck/Camera
+var flashlight_on:bool = true
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
+func _ready():
+	PlayerAutoload.player = self
+
+func _input(event):
+	if event is InputEventMouseMotion:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		neck.rotate_y(-event.relative.x * 0.01)
+		camera.rotate_x(-event.relative.y * 0.01)
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-45), deg_to_rad(60))
 	elif event.is_action_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		if event is InputEventMouseMotion:
-			neck.rotate_y(-event.relative.x * 0.01)
-			camera.rotate_x(-event.relative.y * 0.01)
-			camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-45), deg_to_rad(60))
+		get_tree().quit()
+	elif event.is_action_pressed("flashlight"):
+		flashlight_on = !flashlight_on
+		$Neck/Camera/Flashlight/SpotLight3D.visible = flashlight_on
+		$Sounds/Flashlight.play_sfx()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -36,6 +42,7 @@ func _physics_process(delta):
 	# Handle jump.
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		$Sounds/Jump.play_sfx()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -61,6 +68,16 @@ func _physics_process(delta):
 	camera.transform.origin = _headbob(t_bob)
 	
 	move_and_slide()
+	if direction != Vector3() and is_on_floor() and !is_sprinting:
+		if $Sounds/Timer.time_left <= 0:
+			$Sounds/Walk.pitch_scale = randf_range(1.2,1)
+			$Sounds/Walk.play_sfx()
+			$Sounds/Timer.start(0.7)
+	elif direction != Vector3() and is_on_floor() and is_sprinting:
+		if $Sounds/Timer.time_left <= 0:
+			$Sounds/Walk.pitch_scale = randf_range(1.2,1)
+			$Sounds/Walk.play_sfx()
+			$Sounds/Timer.start(0.4)
 
 	# Handle camera zoom when sprinting
 	if is_sprinting:
