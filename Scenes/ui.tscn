@@ -20,5 +20,6 @@ text = "Move : WASD
 Jump: Space
 Sprint: LShift
 Toggle Flashlight: E
-Quit: ESC"
+Quit: ESC
+Restart: R"
 label_settings = SubResource("LabelSettings_kjdtx")

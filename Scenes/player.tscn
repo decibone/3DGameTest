@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dixqvhp8ehcby"]
+[gd_scene load_steps=10 format=3 uid="uid://dixqvhp8ehcby"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_jwi0y"]
 [ext_resource type="AudioStream" uid="uid://iswxnrswhh3f" path="res://Assets/Sounds/SOUND/WALK_SOUND.wav" id="2_et7tj"]
@@ -6,28 +6,22 @@
 [ext_resource type="AudioStream" uid="uid://nqb0344c8xdl" path="res://Assets/Sounds/SOUND/JUMP_SOUND.wav" id="4_87qic"]
 [ext_resource type="AudioStream" uid="uid://mgw82sanfc84" path="res://Assets/Sounds/SOUND/flashlight-clicking-on-105809.mp3" id="5_vlclp"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8c0nv"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xueo4"]
-albedo_color = Color(1, 0.156863, 0.156863, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_485yu"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nwf8y"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_yll0s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2bkej"]
 albedo_color = Color(0.0687983, 0.0687983, 0.0687983, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tkble"]
+size = Vector3(0.777832, 1.20825, 1)
+
 [node name="Player" type="CharacterBody3D"]
 floor_max_angle = 1.0472
 script = ExtResource("1_jwi0y")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_8c0nv")
-surface_material_override/0 = SubResource("StandardMaterial3D_xueo4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_485yu")
+mesh = SubResource("CapsuleMesh_nwf8y")
 
 [node name="Neck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.582655, -0.0668247)
@@ -48,8 +42,8 @@ light_indirect_energy = 5.02
 light_size = 0.15
 shadow_enabled = true
 distance_fade_enabled = true
-spot_range = 10.0
-spot_angle = 36.7708
+spot_range = 14.2336
+spot_angle = 30.7575
 
 [node name="Sounds" type="Node3D" parent="."]
 
@@ -70,3 +64,7 @@ script = ExtResource("3_p4un1")
 [node name="Flashlight" type="AudioStreamPlayer3D" parent="Sounds"]
 stream = ExtResource("5_vlclp")
 script = ExtResource("3_p4un1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00854492, -0.104126, 0)
+shape = SubResource("BoxShape3D_tkble")
