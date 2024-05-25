@@ -50,7 +50,7 @@ metallic_specular = 0.0
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uy5hn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f2bkd"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("19_fwbo3")
@@ -85,7 +85,7 @@ _surfaces = [{
 "format": 34359742495,
 "index_count": 12,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 1, 0, 0, 0, 4, 0, 5, 0, 6, 0, 7, 0, 5, 0, 4, 0),
-"material": SubResource("ShaderMaterial_uy5hn"),
+"material": SubResource("ShaderMaterial_f2bkd"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 8,
